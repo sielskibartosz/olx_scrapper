@@ -18,4 +18,6 @@ class GoogleSheet:
             return
         headers = self.sheet.row_values(1)
         values = [[row.get(header, "") for header in headers] for row in rows]
-        self.sheet.append_rows(values)
+        # self.sheet.append_rows(values)
+        for row in reversed(values):
+            self.sheet.insert_row(row, index=2)

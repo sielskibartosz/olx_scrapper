@@ -10,7 +10,7 @@ if __name__ == "__main__":
     load_dotenv()
     SHEET_ID = os.getenv("SHEET_ID")
     SHEET_NAME = "Arkusz1"
-    OLX_URL = "https://www.olx.pl/d/motoryzacja/samochody/"
+    OLX_URL = "https://www.olx.pl/motoryzacja/samochody/?search%5Bfilter_float_price:from%5D=8000&search%5Bfilter_float_price:to%5D=12500"
 
     sheet = GoogleSheet(SHEET_ID, SHEET_NAME)
     scraper = OlxScraper(OLX_URL)
@@ -19,5 +19,4 @@ if __name__ == "__main__":
 
     new_data = manager.update_sheet_with_unique(scraper)
     telegram_string = manager.format_data_as_message(new_data)
-    print(telegram_string)
     telegram.send_message(telegram_string)
