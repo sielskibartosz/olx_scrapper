@@ -4,6 +4,7 @@ from data_manager import DataManager
 import os
 from dotenv import load_dotenv
 
+from telegram import Telegram
 
 if __name__ == "__main__":
     load_dotenv()
@@ -14,6 +15,9 @@ if __name__ == "__main__":
     sheet = GoogleSheet(SHEET_ID, SHEET_NAME)
     scraper = OlxScraper(OLX_URL)
     manager = DataManager(sheet)
+    telegram = Telegram()
 
-    new_count = manager.update_sheet_with_unique(scraper)
-    print(f"Dodano {new_count} nowych rekordów.")
+    new_data = manager.update_sheet_with_unique(scraper)
+    telegram_string = manager.format_data_as_message(new_data)
+    print(telegram_string)
+    telegram.send_message(telegram_string)
